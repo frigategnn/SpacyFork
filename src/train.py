@@ -20,7 +20,6 @@ log = RankedLogger(__name__, rank_zero_only=True)
 
 
 def train(cfg):
-    
     start = time.time()
 
     run_name = generate_run_name(cfg)
@@ -41,9 +40,10 @@ def train(cfg):
     log.info(f"Instantiating trainer <{cfg.trainer._target_}>")
 
     trainer: Trainer = hydra.utils.instantiate(
-        cfg.trainer, callbacks=callbacks, logger=logger, detect_anomaly=True)
+        cfg.trainer, callbacks=callbacks, logger=logger
+    )  # , detect_anomaly=True)
 
-    if 'PCMCI' in cfg.model._target_:
+    if "PCMCI" in cfg.model._target_:
         trainer.test(model=model, datamodule=datamodule)
         return
     # fit the model
@@ -54,10 +54,10 @@ def train(cfg):
 
     end = time.time()
 
-    print('Finished in '+str(round(end - start, 2))+' seconds')
+    print("Finished in " + str(round(end - start, 2)) + " seconds")
 
 
-@hydra.main(version_base='1.3', config_path="../configs", config_name="train.yaml")
+@hydra.main(version_base="1.3", config_path="../configs", config_name="train.yaml")
 def main(cfg: DictConfig) -> Optional[float]:
     """Main entry point for training.
 
