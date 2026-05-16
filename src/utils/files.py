@@ -90,7 +90,7 @@ def generate_datafolder_name(cfg):
     if "sst" in cfg.model:
         return generate_sst_datafolder_name(cfg)
     elif "air_quality" in cfg.model:
-        return "air_quality_setting1"
+        return "air_quality"
     else:
         return generate_synthetic_datafolder_name(cfg)
 

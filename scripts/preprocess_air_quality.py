@@ -9,14 +9,17 @@ import argparse
 # ---------------------------------------------------------------------------
 # Pollutants: the "exposure" side of the causal graph
 POLLUTANT_COLS = ["o3", "PM10", "PM2_5_DRY", "SO2", "NO", "NO2", "CO"]
+POLLUTANT_COLS = ["PM10", "PM2_5_DRY"]
 
 # Meteorological confounders: influence both pollution dispersion and health
 METEO_COLS = ["RH", "T2"]
+METEO_COLS = []
 
 # Health outcomes: derived from DISEASE_CODE column via one-hot encoding
 # Each row in the Excel is a patient visit with a single DISEASE_CODE.
 # We count the number of visits per disease per grid cell per time period.
 DISEASE_CODES = ["HTN", "CAD", "DBM", "COPD", "TB", "BA", "DEM", "LC"]
+DISEASE_CODES = ["COPD", "TB"]
 
 
 def parse_args():
@@ -26,12 +29,12 @@ def parse_args():
     parser.add_argument(
         "--input_file", type=str, default="../../Multi_pollutants_Scalling_input.xlsx"
     )
-    parser.add_argument("--out_dir", type=str, default="../data/air_quality_setting1")
+    parser.add_argument("--out_dir", type=str, default="../data/air_quality")
     parser.add_argument(
-        "--nx", type=int, default=20, help="Horizontal (longitude) grid cells"
+        "--nx", type=int, default=30, help="Horizontal (longitude) grid cells"
     )
     parser.add_argument(
-        "--ny", type=int, default=20, help="Vertical (latitude) grid cells"
+        "--ny", type=int, default=30, help="Vertical (latitude) grid cells"
     )
     parser.add_argument(
         "--time_freq",
@@ -270,10 +273,10 @@ def main():
     # ------------------------------------------------------------------
     # Save
     # ------------------------------------------------------------------
-    # HACK: begin
-    T = 10
-    X = X[:, :T, :, :]  # (n_variates, n_timesteps, nx, ny)
-    # HACK: end
+    # # HACK: begin
+    # T = 10
+    # X = X[:, :T, :, :]  # (n_variates, n_timesteps, nx, ny)
+    # # HACK: end
     X_tensor = torch.tensor(X).view(V, T, N)  # [V, T, num_nodes]
 
     os.makedirs(args.out_dir, exist_ok=True)

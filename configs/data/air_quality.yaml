@@ -3,18 +3,18 @@ _target_: src.data.AirQualityDataModule.AirQualityDataModule
 data_dir: "data"
 train_ids: [0, 1]
 val_ids: [0, 1]
-batch_size: 1
+batch_size: 32
 num_workers: 16
 pin_memory: False
 
 data_config:
   _target_: src.data.AirQualityDataConfig.AirQualityDataConfig
   model: air_quality
-  nx: 5
-  ny: 5
-  num_nodes: 34
-  num_variates: 17
-  time_length: 100
+  nx: 30
+  ny: 30
+  num_nodes: 8
+  num_variates: 4
+  time_length: 174
   node_dist: 1
   node_extent_low: 1
   node_extent_high: 1

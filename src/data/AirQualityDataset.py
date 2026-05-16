@@ -11,7 +11,7 @@ class AirQualityDataset(Dataset):
         self.ids = ids
         self.num_samples = len(self.ids)
         # Assuming the preprocessing script saved to this folder
-        self.folder_path = os.path.join(self.data_dir, "air_quality_setting1")
+        self.folder_path = os.path.join(self.data_dir, "air_quality")
 
     def __len__(self):
         return self.num_samples

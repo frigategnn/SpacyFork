@@ -6,16 +6,16 @@ from typing import Tuple
 class AirQualityDataConfig:
     # data properties
     model: str = "air_quality"
-    time_length: int = 100
+    time_length: int = 174
 
     # grid properties
-    nx: int = 20
-    ny: int = 20
+    nx: int = 30
+    ny: int = 30
     node_dist: int = 1
     node_extent_low: int = 1
     node_extent_high: int = 1
     random_node: bool = False
-    num_variates: int = 1
+    num_variates: int = 4
     disjoint_nodes: bool = False
     map_type: str = "custom"
     grid_noise: str = "none"
@@ -26,7 +26,7 @@ class AirQualityDataConfig:
     inst_graph_type: str = "custom"
     lag_graph_type: str = "custom"
     lag: int = 1
-    num_nodes: int = 400
+    num_nodes: int = 8
     base_noise_type: str = "custom"
     hist_dep_noise_type: str = "custom"
     noise_scale: float = 0.0

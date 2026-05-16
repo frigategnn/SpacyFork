@@ -2,7 +2,7 @@ import torch
 
 
 def convert_data_to_timelagged(X: torch.Tensor, lag: int) -> torch.Tensor:
-    """Convert data from shape: (batch_size, num_variates, timesteps, num_grid_points) 
+    """Convert data from shape: (batch_size, num_variates, timesteps, num_grid_points)
     to shape (batch_size*n_fragments, num_variates, lag+1, num_grid_points)
 
 
@@ -23,19 +23,19 @@ def convert_data_to_timelagged(X: torch.Tensor, lag: int) -> torch.Tensor:
     n_fragments = n_samples * n_fragments_per_sample
 
     i = torch.arange(timesteps - lag)
-    j = torch.arange(lag+1)
+    j = torch.arange(lag + 1)
     indices = i[:, None] + j
 
     X_reshaped = X[:, :, indices]
     X_reshaped = X_reshaped.permute((0, 2, 1, 3, 4)).reshape(
-        n_fragments, num_variates, lag+1, num_grid_points)
+        n_fragments, num_variates, lag + 1, num_grid_points
+    )
 
     return X_reshaped
 
 
-
 def cdsd_convert_timelagged(X: torch.Tensor, lag: int) -> torch.Tensor:
-    """Convert data from shape: (batch_size, num_variates, timesteps, num_grid_points) 
+    """Convert data from shape: (batch_size, num_variates, timesteps, num_grid_points)
     to shape (batch_size*n_fragments, num_variates, lag+1, num_grid_points)
 
 
@@ -56,12 +56,13 @@ def cdsd_convert_timelagged(X: torch.Tensor, lag: int) -> torch.Tensor:
     n_fragments = n_samples * n_fragments_per_sample
 
     i = torch.arange(timesteps - lag)
-    j = torch.arange(lag+1)
+    j = torch.arange(lag + 1)
     indices = i[:, None] + j
 
     X_reshaped = X[:, :, indices]
     X_reshaped = X_reshaped.permute((0, 2, 1, 3, 4)).reshape(
-        n_fragments, num_variates, lag+1, num_grid_points)
-    X_curr = X_reshaped[:,:,-1,:]
+        n_fragments, num_variates, lag + 1, num_grid_points
+    )
+    X_curr = X_reshaped[:, :, -1, :]
 
     return X_reshaped, X_curr
